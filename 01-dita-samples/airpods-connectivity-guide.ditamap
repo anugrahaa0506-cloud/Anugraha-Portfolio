@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map id="airpods-connectivity-guide">
+  <title>AirPods Connectivity Guide</title>
+
+  <topicmeta>
+    <author>Anugraha S</author>
+    <copyright>
+      <copyryear year="2026"/>
+      <copyrholder>Portfolio Sample — Anugraha S</copyrholder>
+    </copyright>
+    <shortdesc>
+      A structured documentation set covering AirPods Bluetooth connectivity — how it works, 
+      how to reconnect, and how to interpret status indicators. Written as a DITA portfolio 
+      sample using publicly available product information.
+    </shortdesc>
+  </topicmeta>
+
+  <!-- Concept: background knowledge first -->
+  <topicref href="concept-airpods-bluetooth.dita" type="concept">
+    <topicmeta>
+      <navtitle>Understanding AirPods Bluetooth Connectivity</navtitle>
+    </topicmeta>
+  </topicref>
+
+  <!-- Task: procedural step-by-step -->
+  <topicref href="task-reconnect-airpods.dita" type="task">
+    <topicmeta>
+      <navtitle>Reconnecting AirPods to an iPhone</navtitle>
+    </topicmeta>
+  </topicref>
+
+  <!-- Reference: lookup table -->
+  <topicref href="reference-airpods-led-indicators.dita" type="reference">
+    <topicmeta>
+      <navtitle>AirPods LED Status Indicators</navtitle>
+    </topicmeta>
+  </topicref>
+
+</map>

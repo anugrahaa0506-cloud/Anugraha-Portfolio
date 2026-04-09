@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="concept-airpods-bluetooth">
+  <title>Understanding AirPods Bluetooth Connectivity</title>
+  <shortdesc>
+    AirPods use Bluetooth 5.0 technology to establish a wireless connection with Apple devices. 
+    Understanding how this connection works helps you troubleshoot issues and maintain a stable audio experience.
+  </shortdesc>
+  <conbody>
+
+    <section id="how-bluetooth-works">
+      <title>How Bluetooth pairing works</title>
+      <p>
+        Bluetooth is a short-range wireless communication standard that allows devices to exchange 
+        data over distances of up to 10 metres. When you pair AirPods with a device for the first 
+        time, the two devices exchange security keys and store each other's identities. This is called 
+        <term>pairing</term>. After pairing, the devices can reconnect automatically without repeating 
+        the full pairing process.
+      </p>
+      <p>
+        AirPods use Apple's <term>W1</term> or <term>H1</term> chip (depending on the model) to manage 
+        Bluetooth connections. These chips enable faster pairing, improved connection stability, and 
+        automatic switching between devices signed in to the same Apple ID.
+      </p>
+    </section>
+
+    <section id="icloud-pairing">
+      <title>iCloud-based automatic pairing</title>
+      <p>
+        When you pair AirPods with one Apple device signed in to your iCloud account, they are 
+        automatically available on all other Apple devices using the same Apple ID. This includes 
+        iPhone, iPad, Mac, and Apple Watch. You do not need to manually pair them to each device.
+      </p>
+      <p>
+        Automatic switching allows AirPods to detect which device you are actively using — for 
+        example, switching from your Mac to your iPhone when a call comes in — and transfer the 
+        audio connection without manual input.
+      </p>
+    </section>
+
+    <section id="connection-states">
+      <title>AirPods connection states</title>
+      <p>AirPods can exist in one of the following connection states at any time:</p>
+      <dl>
+        <dlentry>
+          <dt>Paired and connected</dt>
+          <dd>AirPods are actively connected to a device and ready to play audio.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>Paired but disconnected</dt>
+          <dd>AirPods are recognised by the device but not actively connected. They will reconnect 
+          automatically when removed from the case near the paired device.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>In pairing mode</dt>
+          <dd>AirPods are discoverable and ready to be paired with a new device. Indicated by a 
+          white flashing light on the case.</dd>
+        </dlentry>
+        <dlentry>
+          <dt>Not charged</dt>
+          <dd>AirPods have insufficient battery to establish or maintain a Bluetooth connection.</dd>
+        </dlentry>
+      </dl>
+    </section>
+
+    <section id="interference">
+      <title>Factors that affect Bluetooth connectivity</title>
+      <p>
+        Several environmental and device-level factors can degrade or interrupt a Bluetooth connection:
+      </p>
+      <ul>
+        <li>Physical obstructions such as walls, furniture, or the user's own body blocking the 
+        line of sight between AirPods and the connected device.</li>
+        <li>Wireless interference from other Bluetooth devices, Wi-Fi routers, or microwave ovens 
+        operating on the 2.4 GHz frequency band.</li>
+        <li>Distance exceeding the effective Bluetooth range of approximately 10 metres.</li>
+        <li>Outdated firmware on the AirPods or operating system on the connected device.</li>
+        <li>Too many paired devices stored in the AirPods memory, which can cause connection 
+        instability on some models.</li>
+      </ul>
+    </section>
+
+  </conbody>
+</concept>

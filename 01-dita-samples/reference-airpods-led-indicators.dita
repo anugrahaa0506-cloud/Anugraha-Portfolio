@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "-//OASIS//DTD DITA Reference//EN" "reference.dtd">
+<reference id="ref-airpods-led-indicators">
+  <title>AirPods LED Status Indicators</title>
+  <shortdesc>
+    The LED light on the AirPods charging case communicates the current status of the AirPods 
+    and the case battery. Use this reference to interpret each light pattern.
+  </shortdesc>
+  <refbody>
+
+    <section id="case-led-location">
+      <title>LED location by model</title>
+      <p>
+        The location of the LED indicator varies by AirPods model:
+      </p>
+      <ul>
+        <li><b>AirPods (1st generation):</b> LED is located inside the case lid, visible when open.</li>
+        <li><b>AirPods (2nd generation and later):</b> LED is located on the front of the case, 
+        visible when the lid is closed.</li>
+        <li><b>AirPods Pro (all generations):</b> LED is located on the front of the MagSafe 
+        charging case.</li>
+      </ul>
+    </section>
+
+    <section id="led-reference-table">
+      <title>LED status reference</title>
+      <table frame="all" rowsep="1" colsep="1">
+        <tgroup cols="3">
+          <colspec colname="col1" colwidth="1.5*"/>
+          <colspec colname="col2" colwidth="2*"/>
+          <colspec colname="col3" colwidth="2.5*"/>
+          <thead>
+            <row>
+              <entry>LED pattern</entry>
+              <entry>AirPods in case</entry>
+              <entry>AirPods not in case</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>Green (solid)</entry>
+              <entry>AirPods are fully charged.</entry>
+              <entry>Case is fully charged.</entry>
+            </row>
+            <row>
+              <entry>Amber (solid)</entry>
+              <entry>AirPods are charging. Less than one full charge remaining in case.</entry>
+              <entry>Case has less than one full charge remaining.</entry>
+            </row>
+            <row>
+              <entry>White (flashing)</entry>
+              <entry>AirPods are in pairing mode and ready to connect to a new device.</entry>
+              <entry>Not applicable.</entry>
+            </row>
+            <row>
+              <entry>Amber (flashing)</entry>
+              <entry>A pairing error has occurred. Reset the AirPods before attempting to pair again.</entry>
+              <entry>Not applicable.</entry>
+            </row>
+            <row>
+              <entry>No light</entry>
+              <entry>Case battery is depleted, or AirPods are fully charged and case lid is closed.</entry>
+              <entry>Case battery is depleted.</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+    </section>
+
+    <section id="check-battery">
+      <title>Checking battery levels without the LED</title>
+      <p>
+        For a precise battery percentage reading, use one of the following methods:
+      </p>
+      <ul>
+        <li>Open the AirPods case near your paired iPhone. A battery card appears on screen 
+        showing the charge level of each AirPod and the case separately.</li>
+        <li>Add the <uicontrol>Batteries</uicontrol> widget to your iPhone Home Screen or 
+        Today View to see AirPods battery at a glance.</li>
+        <li>Ask Siri: "What is my AirPods battery level?"</li>
+        <li>On Mac, click the Bluetooth icon in the menu bar and hover over your AirPods name.</li>
+      </ul>
+    </section>
+
+  </refbody>
+</reference>

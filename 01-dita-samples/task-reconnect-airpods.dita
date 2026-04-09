@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task PUBLIC "-//OASIS//DTD DITA Task//EN" "task.dtd">
+<task id="task-reconnect-airpods">
+  <title>Reconnecting AirPods to an iPhone</title>
+  <shortdesc>
+    If your AirPods are not connecting automatically, you can manually reconnect them to your 
+    iPhone through the Bluetooth settings or by resetting the pairing.
+  </shortdesc>
+  <taskbody>
+
+    <prereq>
+      <p>Before you begin, make sure:</p>
+      <ul>
+        <li>Your AirPods have sufficient charge. Place them in the charging case for at least 
+        15 minutes if the battery is low.</li>
+        <li>Bluetooth is enabled on your iPhone. Go to <uicontrol>Settings</uicontrol> and 
+        confirm that <uicontrol>Bluetooth</uicontrol> is toggled on.</li>
+        <li>Your iPhone is running iOS 14 or later. Earlier versions may not support automatic 
+        switching and some pairing features.</li>
+      </ul>
+    </prereq>
+
+    <context>
+      <p>
+        AirPods occasionally lose their active connection after extended periods of inactivity, 
+        after being connected to a different device, or after a software update. This procedure 
+        walks you through re-establishing the connection manually.
+      </p>
+    </context>
+
+    <steps>
+      <step>
+        <cmd>Place both AirPods in the charging case and close the lid.</cmd>
+        <info>Wait 15 seconds before proceeding. This resets the AirPods' active connection state.</info>
+      </step>
+      <step>
+        <cmd>On your iPhone, open <uicontrol>Settings</uicontrol>.</cmd>
+      </step>
+      <step>
+        <cmd>Tap <uicontrol>Bluetooth</uicontrol>.</cmd>
+        <info>The Bluetooth screen shows all previously paired devices. Your AirPods should 
+        appear in the list under <uicontrol>My Devices</uicontrol>.</info>
+      </step>
+      <step>
+        <cmd>Open the AirPods charging case lid while holding the case close to your iPhone.</cmd>
+        <info>The AirPods status in the Bluetooth list should change from 
+        <uicontrol>Not Connected</uicontrol> to <uicontrol>Connected</uicontrol> within a few seconds.</info>
+      </step>
+      <step>
+        <cmd>If the AirPods do not connect automatically, tap the name of your AirPods in the 
+        Bluetooth list.</cmd>
+        <stepresult>Your iPhone initiates a manual connection request. The status changes to 
+        <uicontrol>Connected</uicontrol> when successful.</stepresult>
+      </step>
+    </steps>
+
+    <result>
+      <p>
+        Your AirPods are now connected to your iPhone. Audio from your iPhone will route 
+        through the AirPods automatically. You will see the AirPods battery indicator in the 
+        iPhone status bar or in the Batteries widget.
+      </p>
+    </result>
+
+    <postreq>
+      <p>
+        If your AirPods still do not connect after following these steps, proceed to 
+        <xref href="task-reset-airpods.dita">Resetting AirPods to factory settings</xref> 
+        to perform a full reset and re-pair from scratch.
+      </p>
+    </postreq>
+
+  </taskbody>
+</task>
