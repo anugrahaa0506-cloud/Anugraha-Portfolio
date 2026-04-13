@@ -1,1 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DITA XML Samples — Anugraha S</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg:        #F7F8FA;
+      --surface:   #FFFFFF;
+      --border:    #E2E5EB;
+      --text-main: #1A1D23;
+      --text-sub:  #4A5166;
+      --text-hint: #8B91A1;
+      --accent:    #1E40AF;
+      --accent-lt: #EEF2FF;
+      --tag-bg:    #F0F4FF;
+      --tag-txt:   #3B5BDB;
+      --concept:   #0F766E;
+      --concept-lt:#F0FDF9;
+      --task:      #7C3AED;
+      --task-lt:   #F5F3FF;
+      --ref:       #B45309;
+      --ref-lt:    #FFFBEB;
+      --icon-q:    #2563EB;
+      --shadow:    0 1px 3px rgba(0,0,0,.07), 0 4px 12px rgba(0,0,0,.05);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: -.01em;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-sub);
+      text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      transition: all .15s;
+    }
+    .nav-back:hover { background: var(--bg); color: var(--text-main); }
+    .nav-back svg { width: 14px; height: 14px; }
+
+    /* ── LAYOUT ── */
+    .page-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      margin-bottom: 2.5rem;
+    }
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--text-hint);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: .75rem;
+      letter-spacing: .02em;
+    }
+    .breadcrumb span { color: var(--accent); }
+    .page-title {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      margin-bottom: .5rem;
+    }
+    .page-desc {
+      font-size: 14.5px;
+      color: var(--text-sub);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: .01em;
+    }
+    .tag-blue  { background: var(--tag-bg);    color: var(--tag-txt); }
+    .tag-green { background: var(--concept-lt); color: var(--concept); }
+    .tag-purple{ background: var(--task-lt);    color: var(--task); }
+    .tag-amber { background: var(--ref-lt);     color: var(--ref); }
+
+    /* ── TOPIC CARDS ── */
+    .topic-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    /* ── TOPIC HEADER ── */
+    .topic-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .topic-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-concept { background: var(--concept-lt); color: var(--concept); }
+    .badge-task    { background: var(--task-lt);    color: var(--task); }
+    .badge-ref     { background: var(--ref-lt);     color: var(--ref); }
+
+    .topic-title-line {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-main);
+      letter-spacing: -.01em;
+    }
+
+    /* ── TOPIC BODY ── */
+    .topic-body { padding: 1.5rem; }
+
+    /* ── WRITEFOLIO SECTION BLOCKS ── */
+    .section-block { margin-bottom: 1.75rem; }
+    .section-block:last-child { margin-bottom: 0; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: .6rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label svg {
+      flex-shrink: 0;
+      color: var(--icon-q);
+    }
+
+    /* shortdesc */
+    .shortdesc {
+      font-size: 14.5px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+
+    /* problem groups (Writefolio pattern) */
+    .problem-group { margin-bottom: 1.25rem; }
+    .problem-group:last-child { margin-bottom: 0; }
+    .problem-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: .4rem;
+    }
+    .problem-title.step-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      flex-shrink: 0;
+      font-family: 'DM Mono', monospace;
+    }
+
+    ul.doc-list {
+      list-style: none;
+      padding: 0;
+    }
+    ul.doc-list li {
+      position: relative;
+      padding-left: 1.1rem;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.65;
+      margin-bottom: .3rem;
+    }
+    ul.doc-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    ul.doc-list li strong { color: var(--text-main); font-weight: 500; }
+
+    /* step list */
+    ol.step-list {
+      list-style: none;
+      padding: 0;
+      counter-reset: steps;
+    }
+    ol.step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--text-sub);
+      line-height: 1.65;
+      margin-bottom: .55rem;
+    }
+    ol.step-list li::before {
+      content: counter(steps);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-lt);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    ol.step-list li strong { color: var(--text-main); font-weight: 500; }
+
+    /* reference table */
+    .ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      margin-top: .5rem;
+    }
+    .ref-table thead tr {
+      background: var(--bg);
+    }
+    .ref-table th {
+      text-align: left;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-hint);
+      border-bottom: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+    }
+    .ref-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-sub);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .ref-table tr:last-child td { border-bottom: none; }
+    .ref-table td:first-child {
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+    }
+    .led-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    /* ── DITA SOURCE CHIP ── */
+    .dita-source {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: .75rem 1.5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 11.5px;
+      color: var(--text-hint);
+    }
+    .dita-source span { color: var(--accent); }
+
+    /* ── DITAMAP BANNER ── */
+    .ditamap-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: var(--shadow);
+    }
+    .ditamap-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ditamap-icon svg { width: 18px; height: 18px; color: var(--accent); }
+    .ditamap-info { flex: 1; }
+    .ditamap-label {
+      font-size: 11px;
+      font-weight: 600;
+      font-family: 'DM Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      color: var(--text-hint);
+      margin-bottom: 3px;
+    }
+    .ditamap-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 3px;
+    }
+    .ditamap-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.55;
+    }
+    .ditamap-topics {
+      display: flex;
+      gap: 6px;
+      margin-top: .6rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 12.5px;
+      color: var(--text-hint);
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 2rem 1.25rem 4rem; }
+      nav { padding: 0 1.25rem; }
+      .topic-header { padding: .75rem 1rem; flex-wrap: wrap; }
+      .topic-body { padding: 1.25rem 1rem; }
+      .ref-table { font-size: 12.5px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="../index.html">Anugraha S</a>
+  <a class="nav-back" href="../index.html">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Back to portfolio
+  </a>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="breadcrumb">Portfolio / <span>01 — DITA XML Samples</span></div>
+    <h1 class="page-title">DITA XML Samples</h1>
+    <p class="page-desc">Three topic types — concept, task, and reference — structured using DITA XML conventions and tied together with a ditamap. Written using publicly available product information as a portfolio demonstration.</p>
+    <div class="meta-row">
+      <span class="tag tag-blue">DITA 1.3</span>
+      <span class="tag tag-blue">oXygen XML</span>
+      <span class="tag tag-green">Concept</span>
+      <span class="tag tag-purple">Task</span>
+      <span class="tag tag-amber">Reference</span>
+    </div>
+  </div>
+
+  <!-- DITAMAP BANNER -->
+  <div class="ditamap-banner">
+    <div class="ditamap-icon">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+    </div>
+    <div class="ditamap-info">
+      <div class="ditamap-label">ditamap</div>
+      <div class="ditamap-title">AirPods Connectivity Guide</div>
+      <div class="ditamap-desc">A structured documentation set covering AirPods Bluetooth connectivity — how it works, how to reconnect, and how to interpret status indicators.</div>
+      <div class="ditamap-topics">
+        <span class="tag tag-green">concept-airpods-bluetooth.dita</span>
+        <span class="tag tag-purple">task-reconnect-airpods.dita</span>
+        <span class="tag tag-amber">reference-airpods-led-indicators.dita</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TOPIC 1 — CONCEPT
+  ══════════════════════════════════════ -->
+  <div class="topic-card">
+    <div class="topic-header">
+      <span class="topic-type-badge badge-concept">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+        Concept
+      </span>
+      <span class="topic-title-line">Understanding AirPods Bluetooth Connectivity</span>
+    </div>
+
+    <div class="topic-body">
+      <p class="shortdesc">AirPods use Bluetooth to communicate with your devices. Understanding how this connection works helps you resolve most connectivity issues quickly and confidently.</p>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+          How Bluetooth pairing works
+        </div>
+        <ul class="doc-list">
+          <li>AirPods store pairing information for up to <strong>10 devices</strong> at a time.</li>
+          <li>When you open the AirPods case near a paired iPhone, they connect automatically via iCloud device sharing.</li>
+          <li>Automatic switching detects which device is actively in use and transfers the connection without manual input.</li>
+          <li>The H1 and H2 chips inside AirPods manage this handoff — they are not standard Bluetooth chipsets.</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+          Common reasons the connection drops
+        </div>
+        <div class="problem-group">
+          <div class="problem-title">Signal interference</div>
+          <ul class="doc-list">
+            <li>Other Bluetooth devices operating on the 2.4 GHz band can interfere with AirPods.</li>
+            <li>Wi-Fi routers on the same frequency may cause audio dropouts in busy environments.</li>
+          </ul>
+        </div>
+        <div class="problem-group">
+          <div class="problem-title">Range and obstruction</div>
+          <ul class="doc-list">
+            <li>AirPods maintain a reliable connection up to approximately <strong>10 metres</strong> in open space.</li>
+            <li>Walls, metal surfaces, and the human body reduce effective range.</li>
+          </ul>
+        </div>
+        <div class="problem-group">
+          <div class="problem-title">Outdated firmware</div>
+          <ul class="doc-list">
+            <li>AirPods receive firmware updates automatically while charging in their case near a paired iPhone.</li>
+            <li>Outdated firmware is a frequent but often overlooked cause of Bluetooth instability.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="dita-source">concept-airpods-bluetooth.dita &nbsp;·&nbsp; <span>type="concept"</span> &nbsp;·&nbsp; DITA 1.3</div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       TOPIC 2 — TASK
+  ══════════════════════════════════════ -->
+  <div class="topic-card">
+    <div class="topic-header">
+      <span class="topic-type-badge badge-task">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        Task
+      </span>
+      <span class="topic-title-line">Reconnecting AirPods to an iPhone</span>
+    </div>
+
+    <div class="topic-body">
+      <p class="shortdesc">Use this procedure when your AirPods are not connecting automatically to your iPhone. This process re-establishes the Bluetooth pairing from the beginning.</p>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Before you begin
+        </div>
+        <ul class="doc-list">
+          <li>Confirm both AirPods are seated in the case and the case has charge.</li>
+          <li>Make sure your iPhone is running <strong>iOS 14 or later</strong>.</li>
+          <li>Bluetooth must be enabled on your iPhone (<strong>Settings > Bluetooth</strong>).</li>
+        </ul>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+          Steps
+        </div>
+        <ol class="step-list">
+          <li>On your iPhone, go to <strong>Settings > Bluetooth</strong> and tap the <strong>ⓘ</strong> icon next to your AirPods.</li>
+          <li>Tap <strong>Forget This Device</strong> and confirm. This removes the existing pairing.</li>
+          <li>Place both AirPods in the case. Leave the lid open.</li>
+          <li>Press and hold the <strong>setup button</strong> on the back of the case for 15 seconds until the status light flashes white.</li>
+          <li>Hold the open case close to your iPhone. A pairing card will appear on screen.</li>
+          <li>Tap <strong>Connect</strong> and follow the on-screen prompts to complete setup.</li>
+        </ol>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          If the pairing card does not appear
+        </div>
+        <ul class="doc-list">
+          <li>Toggle Bluetooth off and back on from <strong>Settings > Bluetooth</strong>.</li>
+          <li>Restart your iPhone and repeat from Step 4.</li>
+          <li>Confirm the status light flashed white — amber indicates the case needs charging first.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dita-source">task-reconnect-airpods.dita &nbsp;·&nbsp; <span>type="task"</span> &nbsp;·&nbsp; DITA 1.3</div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       TOPIC 3 — REFERENCE
+  ══════════════════════════════════════ -->
+  <div class="topic-card">
+    <div class="topic-header">
+      <span class="topic-type-badge badge-ref">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18M10 3v18"/></svg>
+        Reference
+      </span>
+      <span class="topic-title-line">AirPods LED Status Indicators</span>
+    </div>
+
+    <div class="topic-body">
+      <p class="shortdesc">The LED on the AirPods case communicates charging status, pairing state, and errors. Use this table to identify what each light pattern means.</p>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18M10 3v18"/></svg>
+          Status light reference
+        </div>
+        <table class="ref-table">
+          <thead>
+            <tr>
+              <th>Light pattern</th>
+              <th>What it means</th>
+              <th>Action required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="led-dot" style="background:#22c55e;"></span>Solid green</td>
+              <td>AirPods are fully charged (or case is fully charged with AirPods inside).</td>
+              <td>None — ready to use.</td>
+            </tr>
+            <tr>
+              <td><span class="led-dot" style="background:#f59e0b;"></span>Solid amber</td>
+              <td>AirPods are charging, or case battery is low.</td>
+              <td>Leave connected to charge.</td>
+            </tr>
+            <tr>
+              <td><span class="led-dot" style="background:#ffffff; border: 1.5px solid #d1d5db;"></span>Flashing white</td>
+              <td>AirPods are in pairing mode and ready to connect.</td>
+              <td>Hold case near device to pair.</td>
+            </tr>
+            <tr>
+              <td><span class="led-dot" style="background:#f59e0b;"></span>Flashing amber</td>
+              <td>A pairing error has occurred. AirPods may need to be reset.</td>
+              <td>Hold setup button for 15 seconds to reset.</td>
+            </tr>
+            <tr>
+              <td>No light</td>
+              <td>Case battery is depleted, or AirPods are not in the case.</td>
+              <td>Charge the case before use.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-block">
+        <div class="section-label">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+          Note
+        </div>
+        <ul class="doc-list">
+          <li>The status light reflects the <strong>case battery</strong> when the lid is open with no AirPods inside.</li>
+          <li>It reflects the <strong>AirPods battery</strong> when AirPods are seated in the case with lid open.</li>
+          <li>AirPods Pro and AirPods Max follow the same indicator patterns documented above.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dita-source">reference-airpods-led-indicators.dita &nbsp;·&nbsp; <span>type="reference"</span> &nbsp;·&nbsp; DITA 1.3</div>
+  </div>
+
+</div>
+
+<footer>
+  Anugraha S &nbsp;·&nbsp; Technical Writer &nbsp;·&nbsp;
+  <a href="../index.html">Back to portfolio</a>
+</footer>
+
+</body>
+</html>
