@@ -1,234 +1,506 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/02-troubleshooting-articles/index.html b/02-troubleshooting-articles/index.html
-index 76881a1dc97373e5453ed5d1bc05be07420f816f..1be57a806db6583dfaf56bdc8fb07f968390be40 100644
---- a/02-troubleshooting-articles/index.html
-+++ b/02-troubleshooting-articles/index.html
-@@ -74,63 +74,68 @@
-       color: var(--text-main);
-       margin-bottom: .4rem;
-     }
-     .page-desc {
-       font-size: 14px;
-       color: var(--text-meta);
-       line-height: 1.6;
-       max-width: 580px;
-       margin-bottom: .75rem;
-     }
-     .tag-row { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
-     .tag {
-       font-size: 11.5px;
-       font-weight: 500;
-       padding: 3px 10px;
-       border-radius: 20px;
-       background: var(--tag-bg);
-       color: var(--tag-txt);
-     }
- 
-     /* ── TABS ── */
-     .tab-bar {
-       display: flex;
-       border-bottom: 2px solid var(--border);
-       margin-bottom: 2rem;
-+      overflow-x: auto;
-+      -webkit-overflow-scrolling: touch;
-+      scrollbar-width: thin;
-     }
-     .tab-btn {
-       padding: .65rem 1.25rem;
-       font-size: 13.5px;
-       font-weight: 500;
-       color: var(--text-meta);
-       cursor: pointer;
-       border: none;
-       background: none;
-       border-bottom: 2px solid transparent;
-       margin-bottom: -2px;
-       transition: all .15s;
-       font-family: 'Inter', sans-serif;
-+      white-space: nowrap;
-+      flex-shrink: 0;
-     }
-     .tab-btn:hover { color: var(--text-main); }
-     .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
- 
-     .article-panel { display: none; }
-     .article-panel.active { display: block; }
- 
-     /* ── DOCUMENT CARD ── */
-     .doc-card {
-       background: var(--surface);
-       border: 1px solid var(--border);
-       border-radius: 10px;
-       padding: 3rem 3.5rem;
-       box-shadow: 0 1px 4px rgba(0,0,0,.06);
-     }
- 
-     /* ── DOC HEADER ── */
-     .doc-type-label {
-       font-size: 11.5px;
-       font-weight: 700;
-       letter-spacing: .1em;
-       text-transform: uppercase;
-       color: var(--accent);
-       margin-bottom: .5rem;
-     }
-@@ -185,50 +190,52 @@
-       padding: 0;
-       margin: 0;
-     }
-     ul.wf-list li {
-       display: flex;
-       gap: 10px;
-       align-items: baseline;
-       font-size: 15px;
-       color: var(--text-sub);
-       line-height: 1.68;
-       margin-bottom: .35rem;
-     }
-     ul.wf-list li::before {
-       content: '•';
-       color: var(--text-sub);
-       flex-shrink: 0;
-     }
-     ul.wf-list li strong { color: var(--text-main); font-weight: 600; }
-     ul.wf-list li code {
-       font-family: 'SF Mono','Fira Mono',monospace;
-       font-size: 13px;
-       background: #EEF2F8;
-       color: var(--accent);
-       padding: 1px 5px;
-       border-radius: 4px;
-+      overflow-wrap: anywhere;
-+      word-break: break-word;
-     }
- 
-     /* ── NESTED SUBSTEP LIST ── */
-     ul.wf-list ul.sub-list {
-       margin-top: .3rem;
-       margin-left: .5rem;
-       padding: 0;
-       list-style: none;
-     }
-     ul.wf-list ul.sub-list li {
-       font-size: 14px;
-       color: var(--text-meta);
-       margin-bottom: .25rem;
-     }
-     ul.wf-list ul.sub-list li::before {
-       content: '◦';
-       color: var(--text-meta);
-     }
- 
-     /* ── CALLOUT BOXES ── */
-     .callout {
-       display: flex;
-       align-items: flex-start;
-       gap: 10px;
-       border-radius: 8px;
-@@ -239,89 +246,102 @@
-       color: var(--text-sub);
-     }
-     .callout-tip  { background: var(--tip-bg);  border: 1px solid #FDE68A; border-left: 4px solid var(--tip-border); }
-     .callout-warn { background: var(--warn-bg); border: 1px solid #FCD9A8; border-left: 4px solid var(--warn-border); }
-     .callout-emoji { flex-shrink: 0; font-size: 16px; line-height: 1.5; }
-     .callout strong { color: var(--text-main); font-weight: 600; }
- 
-     /* ── DOC FOOTER ── */
-     .doc-footer {
-       margin-top: 2.5rem;
-       padding-top: 1.25rem;
-       border-top: 1px solid var(--border);
-       font-size: 12.5px;
-       color: var(--text-meta);
-     }
- 
-     footer {
-       text-align: center;
-       padding: 2rem;
-       font-size: 12.5px;
-       color: var(--text-meta);
-     }
-     footer a { color: var(--accent); text-decoration: none; }
- 
-     @media (max-width: 640px) {
-+      nav {
-+        padding: 0 1rem;
-+        gap: .75rem;
-+      }
-+      .nav-back {
-+        text-align: right;
-+      }
-       .doc-card { padding: 2rem 1.25rem; }
-       .doc-title { font-size: 22px; }
-+      .doc-meta {
-+        line-height: 1.5;
-+      }
-+      .tab-btn {
-+        padding: .65rem .9rem;
-+      }
-       .page-shell { padding: 1.5rem 1rem 4rem; }
-     }
-   </style>
- </head>
- <body>
- 
- <nav>
-   <a class="nav-brand" href="../index.html">Anugraha S</a>
-   <a class="nav-back" href="../index.html">← Back to portfolio</a>
- </nav>
- 
- <div class="page-shell">
- 
-   <div class="page-label">Portfolio Sample</div>
-   <h1 class="page-title">Troubleshooting Articles</h1>
-   <p class="page-desc">Structured troubleshooting articles written to Microsoft Manual of Style standards — action-verb-first steps, substeps where needed, and escalation paths.</p>
-   <div class="tag-row">
-     <span class="tag">Troubleshooting</span>
-     <span class="tag">Apple AirPods</span>
-     <span class="tag">Windows 11</span>
-     <span class="tag">Knowledge Base</span>
-   </div>
- 
-   <!-- TABS -->
-   <div class="tab-bar">
-     <button class="tab-btn active" onclick="switchTab(this,'article-1')">01 — AirPods won't connect</button>
-     <button class="tab-btn" onclick="switchTab(this,'article-2')">02 — Wi-Fi network won't show</button>
-   </div>
- 
-   <!-- ══════════════════════════════════════
-        ARTICLE 1 — AIRPODS
-   ══════════════════════════════════════ -->
-   <div class="article-panel active" id="article-1">
-   <div class="doc-card">
- 
-     <div class="doc-type-label">Troubleshooting Guide</div>
--    <h1 class="doc-title">AAirPods won't connect to iPhone</h1>
-+    <h1 class="doc-title">AirPods won't connect to iPhone</h1>
-     <p class="doc-meta">Product: Apple AirPods (all generations) <span>·</span> Platform: iPhone iOS 14+ <span>·</span> Last reviewed: April 2026</p>
-     <hr class="header-rule"/>
- 
-     <!-- TROUBLESHOOTING SECTION -->
-     <div class="section-head">
-       <span class="section-icon">
-         <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
-       </span>
-       <h2>Troubleshooting</h2>
-     </div>
-     <hr class="section-rule"/>
- 
-     <!-- PROBLEM 1 -->
-     <div class="problem-group">
-       <div class="problem-title">AirPods do not connect automatically</div>
-       <ul class="wf-list">
-         <li>Open <strong>Settings</strong> on your iPhone and tap <strong>Bluetooth</strong>.</li>
-         <li>Confirm the Bluetooth toggle is green. If it is already on, toggle it off, wait 5 seconds, then toggle it back on.</li>
-         <li>Place both AirPods in the charging case and open the lid near your iPhone.
-           <ul class="sub-list">
-             <li>Checking that a battery card appears on screen — this confirms the AirPods are being detected.</li>
-             <li>If either AirPod shows below 10% battery, charging them for at least 15 minutes before continuing.</li>
-           </ul>
-         </li>
-         <li>Tap your AirPods name under <strong>My Devices</strong> to connect manually if they do not connect on their own.</li>
- 
-EOF
-)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Troubleshooting Articles — Anugraha S</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F5F7FA;
+      --surface:     #FFFFFF;
+      --border:      #E2E6ED;
+      --text-main:   #1A2233;
+      --text-sub:    #3D4B66;
+      --text-meta:   #6B7A99;
+      --accent:      #2563A8;
+      --tip-border:  #F59E0B;
+      --tip-bg:      #FFFDF0;
+      --warn-border: #F97316;
+      --warn-bg:     #FFF8F0;
+      --tag-bg:      #EEF4FF;
+      --tag-txt:     #3B5BDB;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      font-size: 15.5px;
+      line-height: 1.72;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 52px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { font-size: 14px; font-weight: 600; color: var(--text-main); text-decoration: none; }
+    .nav-back  { font-size: 13px; color: var(--text-meta); text-decoration: none; transition: color .15s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* ── PAGE SHELL ── */
+    .page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    /* ── PAGE INTRO ── */
+    .page-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .4rem;
+    }
+    .page-title {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      margin-bottom: .4rem;
+    }
+    .page-desc {
+      font-size: 14px;
+      color: var(--text-meta);
+      line-height: 1.6;
+      max-width: 580px;
+      margin-bottom: .75rem;
+    }
+    .tag-row { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--tag-bg);
+      color: var(--tag-txt);
+    }
+
+    /* ── TABS ── */
+    .tab-bar {
+      display: flex;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      padding: .65rem 1.25rem;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-meta);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all .15s;
+      font-family: 'Inter', sans-serif;
+    }
+    .tab-btn:hover { color: var(--text-main); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+    .article-panel { display: none; }
+    .article-panel.active { display: block; }
+
+    /* ── DOCUMENT CARD ── */
+    .doc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    }
+
+    /* ── DOC HEADER ── */
+    .doc-type-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .5rem;
+    }
+    .doc-title {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -.02em;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: .4rem;
+    }
+    .doc-meta {
+      font-size: 13.5px;
+      color: var(--text-meta);
+      margin-bottom: 1.25rem;
+    }
+    .doc-meta span { margin: 0 4px; }
+    .header-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.75rem; }
+
+    /* ── SECTION HEAD — Writefolio exact pattern ── */
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 2rem;
+      margin-bottom: .5rem;
+    }
+    .section-icon { color: var(--accent); display: flex; align-items: center; flex-shrink: 0; }
+    .section-icon svg { width: 20px; height: 20px; }
+    .section-head h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -.01em;
+    }
+    .section-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.25rem; }
+
+    /* ── PROBLEM GROUP — Writefolio exact pattern ── */
+    .problem-group { margin-bottom: 1.5rem; }
+    .problem-group:last-of-type { margin-bottom: 0; }
+
+    .problem-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: .45rem;
+    }
+
+    /* ── BULLET LIST — matches Writefolio exactly ── */
+    ul.wf-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.wf-list li {
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+      font-size: 15px;
+      color: var(--text-sub);
+      line-height: 1.68;
+      margin-bottom: .35rem;
+    }
+    ul.wf-list li::before {
+      content: '•';
+      color: var(--text-sub);
+      flex-shrink: 0;
+    }
+    ul.wf-list li strong { color: var(--text-main); font-weight: 600; }
+    ul.wf-list li code {
+      font-family: 'SF Mono','Fira Mono',monospace;
+      font-size: 13px;
+      background: #EEF2F8;
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+
+    /* ── NESTED SUBSTEP LIST ── */
+    ul.wf-list ul.sub-list {
+      margin-top: .3rem;
+      margin-left: .5rem;
+      padding: 0;
+      list-style: none;
+    }
+    ul.wf-list ul.sub-list li {
+      font-size: 14px;
+      color: var(--text-meta);
+      margin-bottom: .25rem;
+    }
+    ul.wf-list ul.sub-list li::before {
+      content: '◦';
+      color: var(--text-meta);
+    }
+
+    /* ── CALLOUT BOXES ── */
+    .callout {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-radius: 8px;
+      padding: .85rem 1.1rem;
+      margin: 1rem 0 1.25rem;
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--text-sub);
+    }
+    .callout-tip  { background: var(--tip-bg);  border: 1px solid #FDE68A; border-left: 4px solid var(--tip-border); }
+    .callout-warn { background: var(--warn-bg); border: 1px solid #FCD9A8; border-left: 4px solid var(--warn-border); }
+    .callout-emoji { flex-shrink: 0; font-size: 16px; line-height: 1.5; }
+    .callout strong { color: var(--text-main); font-weight: 600; }
+
+    /* ── DOC FOOTER ── */
+    .doc-footer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 12.5px;
+      color: var(--text-meta);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 12.5px;
+      color: var(--text-meta);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      .doc-card { padding: 2rem 1.25rem; }
+      .doc-title { font-size: 22px; }
+      .page-shell { padding: 1.5rem 1rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-brand" href="../index.html">Anugraha S</a>
+  <a class="nav-back" href="../index.html">← Back to portfolio</a>
+</nav>
+
+<div class="page-shell">
+
+  <div class="page-label">Portfolio Sample</div>
+  <h1 class="page-title">Troubleshooting Articles</h1>
+  <p class="page-desc">Structured troubleshooting articles written to Microsoft Manual of Style standards — action-verb-first steps, substeps where needed, and escalation paths.</p>
+  <div class="tag-row">
+    <span class="tag">Troubleshooting</span>
+    <span class="tag">Apple AirPods</span>
+    <span class="tag">Windows 11</span>
+    <span class="tag">Knowledge Base</span>
+  </div>
+
+  <!-- TABS -->
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab(this,'article-1')">01 — AirPods Not Connecting</button>
+    <button class="tab-btn" onclick="switchTab(this,'article-2')">02 — Wi-Fi Network Not Showing</button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ARTICLE 1 — AIRPODS
+  ══════════════════════════════════════ -->
+  <div class="article-panel active" id="article-1">
+  <div class="doc-card">
+
+    <div class="doc-type-label">Troubleshooting Guide</div>
+    <h1 class="doc-title">AirPods Not Connecting to iPhone</h1>
+    <p class="doc-meta">Product: Apple AirPods (all generations) <span>·</span> Platform: iPhone iOS 14+ <span>·</span> Last reviewed: April 2026</p>
+    <hr class="header-rule"/>
+
+    <!-- TROUBLESHOOTING SECTION -->
+    <div class="section-head">
+      <span class="section-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+      </span>
+      <h2>Troubleshooting</h2>
+    </div>
+    <hr class="section-rule"/>
+
+    <!-- PROBLEM 1 -->
+    <div class="problem-group">
+      <div class="problem-title">AirPods do not connect automatically</div>
+      <ul class="wf-list">
+        <li>Open <strong>Settings</strong> on your iPhone and tap <strong>Bluetooth</strong>.</li>
+        <li>Confirm the Bluetooth toggle is green. If it is already on, toggle it off, wait 5 seconds, then toggle it back on.</li>
+        <li>Place both AirPods in the charging case and open the lid near your iPhone.
+          <ul class="sub-list">
+            <li>Checking that a battery card appears on screen — this confirms the AirPods are being detected.</li>
+            <li>If either AirPod shows below 10% battery, charging them for at least 15 minutes before continuing.</li>
+          </ul>
+        </li>
+        <li>Tap your AirPods name under <strong>My Devices</strong> to connect manually if they do not connect on their own.</li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 2 -->
+    <div class="problem-group">
+      <div class="problem-title">AirPods are connected to a different device</div>
+      <ul class="wf-list">
+        <li>Check all devices signed in to the same Apple ID — Mac, iPad, or another iPhone.</li>
+        <li>Go to <strong>Settings → Bluetooth</strong> on the other device and disconnect the AirPods, or turn off Bluetooth on that device temporarily.</li>
+        <li>Return to your iPhone and tap your AirPods name under <strong>My Devices</strong> to connect.</li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 3 -->
+    <div class="problem-group">
+      <div class="problem-title">AirPods appear as "Not Connected" after a restart</div>
+      <ul class="wf-list">
+        <li>Press and hold the <strong>Side button</strong> and either <strong>Volume button</strong> until the power slider appears.</li>
+        <li>Drag the slider to turn off your iPhone, wait 30 seconds, then press and hold the <strong>Side button</strong> to restart.</li>
+        <li>Open the AirPods case near your iPhone after it restarts and check whether they connect automatically.</li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 4 -->
+    <div class="problem-group">
+      <div class="problem-title">AirPods do not connect after trying all steps above</div>
+      <ul class="wf-list">
+        <li>Place both AirPods in the charging case and close the lid. Wait 30 seconds, then open the lid.</li>
+        <li>Go to <strong>Settings → Bluetooth</strong> on your iPhone and tap the <strong>Info icon (ⓘ)</strong> next to your AirPods name.</li>
+        <li>Tap <strong>Forget This Device</strong>, then confirm by tapping <strong>Forget Device</strong>.</li>
+        <li>Press and hold the <strong>setup button</strong> on the back of the case for 15 seconds.
+          <ul class="sub-list">
+            <li>Watching for the LED to flash amber, then white — this confirms the AirPods are in pairing mode.</li>
+          </ul>
+        </li>
+        <li>Hold the open case next to your iPhone and follow the on-screen prompts to re-pair.</li>
+      </ul>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-emoji">💡</span>
+      <span><strong>Tip:</strong> AirPods firmware updates automatically while charging in the case near a paired iPhone on Wi-Fi. Check for an iOS update at <strong>Settings → General → Software Update</strong> if issues persist after re-pairing.</span>
+    </div>
+
+    <div class="doc-footer">
+      © 2026 Sample Document — Anugraha S Technical Writing Portfolio. This document is a portfolio sample crafted to Microsoft Manual of Style standards.
+    </div>
+
+  </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ARTICLE 2 — WINDOWS 11 WI-FI
+  ══════════════════════════════════════ -->
+  <div class="article-panel" id="article-2">
+  <div class="doc-card">
+
+    <div class="doc-type-label">Troubleshooting Guide</div>
+    <h1 class="doc-title">Wi-Fi Network Not Showing Up on Windows 11</h1>
+    <p class="doc-meta">Product: Windows 11 PC / Laptop <span>·</span> Component: Wi-Fi adapter and network discovery <span>·</span> Last reviewed: April 2026</p>
+    <hr class="header-rule"/>
+
+    <!-- TROUBLESHOOTING SECTION -->
+    <div class="section-head">
+      <span class="section-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4M12 8h.01"/></svg>
+      </span>
+      <h2>Troubleshooting</h2>
+    </div>
+    <hr class="section-rule"/>
+
+    <!-- PROBLEM 1 -->
+    <div class="problem-group">
+      <div class="problem-title">Wi-Fi is not enabled on the device</div>
+      <ul class="wf-list">
+        <li>Click the <strong>Network icon</strong> in the taskbar (bottom-right corner).</li>
+        <li>Confirm the <strong>Wi-Fi</strong> tile is highlighted. If it appears greyed out, click it to enable Wi-Fi.</li>
+        <li>Check for a physical Wi-Fi switch on your laptop, or try the <strong>Fn + F key</strong> combination that controls the wireless adapter on your device model.</li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 2 -->
+    <div class="problem-group">
+      <div class="problem-title">No networks appear at all</div>
+      <ul class="wf-list">
+        <li>Confirm the router's power light is on and stable — not flashing in an error pattern.</li>
+        <li>Check whether at least one other device can see the network.
+          <ul class="sub-list">
+            <li>If no devices can find the network, the issue is with the router, not your PC.</li>
+          </ul>
+        </li>
+        <li>Restart the router by unplugging it from power, waiting 30 seconds, then plugging it back in.
+          <ul class="sub-list">
+            <li>Allowing 2 minutes for the router to fully restart before checking your PC again.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 3 -->
+    <div class="problem-group">
+      <div class="problem-title">Your network does not appear but others do</div>
+      <ul class="wf-list">
+        <li>Log in to your router's admin panel — typically at <code>192.168.1.1</code> or <code>192.168.0.1</code> in a browser.</li>
+        <li>Confirm both <strong>2.4 GHz</strong> and <strong>5 GHz</strong> bands are active and broadcasting.
+          <ul class="sub-list">
+            <li>Older laptops may only support 2.4 GHz — ensure the 2.4 GHz network is enabled if your device does not support 5 GHz.</li>
+          </ul>
+        </li>
+        <li>Check whether the network name (SSID) is set to hidden. If it is, connect manually:
+          <ul class="sub-list">
+            <li>Clicking the <strong>Network icon</strong> in the taskbar, then selecting <strong>Manage Wi-Fi connections</strong>.</li>
+            <li>Scrolling to the bottom and selecting <strong>Hidden network</strong>.</li>
+            <li>Entering the network name (SSID) and password exactly as configured on your router.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 4 -->
+    <div class="problem-group">
+      <div class="problem-title">Network is visible but connection fails repeatedly</div>
+      <ul class="wf-list">
+        <li>Open <strong>Settings</strong> (Windows key + I) and go to <strong>System → Troubleshoot → Other troubleshooters</strong>.</li>
+        <li>Click <strong>Run</strong> next to <strong>Internet Connections</strong> and follow the on-screen instructions.</li>
+        <li>Right-click the <strong>Start button</strong>, select <strong>Device Manager</strong>, and expand <strong>Network adapters</strong>.</li>
+        <li>Right-click your Wi-Fi adapter and select <strong>Update driver</strong>.
+          <ul class="sub-list">
+            <li>Choosing <strong>Search automatically for drivers</strong> and following the prompts.</li>
+            <li>If no update is found, visiting your laptop manufacturer's support site to download the latest Wi-Fi driver for your model.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- PROBLEM 5 -->
+    <div class="problem-group">
+      <div class="problem-title">Network still does not appear after all steps above</div>
+      <ul class="wf-list">
+        <li>Open <strong>Settings → Network and Internet → Advanced network settings</strong> and click <strong>Network reset</strong>.</li>
+        <li>Click <strong>Reset now</strong> and confirm. Your PC will restart automatically.</li>
+        <li>Reconnect to your Wi-Fi network using your password after the restart.</li>
+      </ul>
+      <div class="callout callout-warn">
+        <span class="callout-emoji">⚠️</span>
+        <span><strong>Important:</strong> Network reset removes all saved Wi-Fi passwords and network configurations. Re-enter credentials for all networks after completing this step.</span>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-emoji">💡</span>
+      <span><strong>Tip:</strong> For corporate or enterprise networks, contact your IT administrator — the network may have MAC address filtering or access restrictions that prevent your device from connecting.</span>
+    </div>
+
+    <div class="doc-footer">
+      © 2026 Sample Document — Anugraha S Technical Writing Portfolio. This document is a portfolio sample crafted to Microsoft Manual of Style standards.
+    </div>
+
+  </div>
+  </div>
+
+</div>
+
+<footer>
+  Anugraha S · Technical Writer · <a href="../index.html">Back to portfolio</a>
+</footer>
+
+<script>
+  function switchTab(btn, panelId) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.article-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
