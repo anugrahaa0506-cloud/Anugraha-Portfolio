@@ -1,1 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Workflow Documentation — Anugraha S</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #F5F7FA; --surface: #FFFFFF; --border: #E2E6ED;
+      --text-main: #1A2233; --text-sub: #3D4B66; --text-meta: #6B7A99;
+      --accent: #2563A8; --accent-lt: #EBF2FB;
+      --tip-bg: #FFFDF0; --tip-bd: #F59E0B;
+      --note-bg: #FFF8F0; --note-bd: #F97316;
+      --tag-bg: #EEF4FF; --tag-txt: #3B5BDB;
+      --stage-bg: #F8FAFC;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); font-size: 15px; line-height: 1.72; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-size: 14px; font-weight: 600; color: var(--text-main); text-decoration: none; }
+    .nav-back { font-size: 13px; color: var(--text-meta); text-decoration: none; }
+    .nav-back:hover { color: var(--accent); }
+    .page-shell { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+    .page-label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+    .page-title { font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--text-main); margin-bottom: .4rem; }
+    .page-desc  { font-size: 14px; color: var(--text-meta); margin-bottom: .75rem; max-width: 580px; }
+    .tag-row { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .tag { font-size: 11.5px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--tag-bg); color: var(--tag-txt); }
+    .doc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3rem 3.5rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+    .doc-type-label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+    .doc-title { font-size: 30px; font-weight: 700; letter-spacing: -.02em; color: var(--text-main); line-height: 1.2; margin-bottom: .4rem; }
+    .doc-meta { font-size: 13.5px; color: var(--text-meta); margin-bottom: 1.25rem; }
+    .doc-meta span { margin: 0 4px; }
+    .header-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.75rem; }
+    .section-head { display: flex; align-items: center; gap: 10px; margin-top: 2.25rem; margin-bottom: .5rem; }
+    .section-icon { color: var(--accent); display: flex; align-items: center; flex-shrink: 0; }
+    .section-icon svg { width: 20px; height: 20px; }
+    .section-head h2 { font-size: 19px; font-weight: 700; color: var(--text-main); letter-spacing: -.01em; }
+    .section-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.1rem; }
+    .body-p { font-size: 15px; color: var(--text-sub); line-height: 1.72; margin-bottom: .85rem; }
 
+    /* TABLES */
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: .75rem 0 1.25rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .doc-table thead tr { background: #F1F4F8; }
+    .doc-table th { text-align: left; padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
+    .doc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-sub); vertical-align: top; line-height: 1.6; }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table td:first-child { font-weight: 600; color: var(--text-main); }
+
+    /* STAGE CARDS */
+    .stage-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.25rem; }
+    .stage-header { display: flex; align-items: center; gap: 12px; padding: .85rem 1.25rem; background: var(--stage-bg); border-bottom: 1px solid var(--border); }
+    .stage-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+    .stage-title { font-size: 15.5px; font-weight: 700; color: var(--text-main); }
+    .stage-owner { margin-left: auto; font-size: 12px; color: var(--text-meta); font-weight: 500; }
+    .stage-body { padding: 1.25rem 1.5rem; }
+    .stage-trigger { font-size: 13.5px; color: var(--text-meta); margin-bottom: .85rem; font-style: italic; }
+    .stage-sub { font-size: 13.5px; font-weight: 700; color: var(--text-main); margin: .85rem 0 .35rem; }
+
+    ol.step-list { list-style: none; padding: 0; margin: .4rem 0 .75rem; counter-reset: steps; }
+    ol.step-list li { counter-increment: steps; display: flex; gap: 10px; align-items: baseline; font-size: 14.5px; color: var(--text-sub); line-height: 1.65; margin-bottom: .45rem; }
+    ol.step-list li::before { content: counter(steps)"."; font-weight: 600; color: var(--text-sub); min-width: 18px; flex-shrink: 0; }
+    ol.step-list li strong { color: var(--text-main); font-weight: 600; }
+    ul.doc-list { list-style: none; padding: 0; margin: .4rem 0 .75rem; }
+    ul.doc-list li { display: flex; gap: 10px; align-items: baseline; font-size: 14.5px; color: var(--text-sub); line-height: 1.65; margin-bottom: .4rem; }
+    ul.doc-list li::before { content: '•'; color: var(--text-sub); flex-shrink: 0; }
+    ul.doc-list li strong { color: var(--text-main); font-weight: 600; }
+    .output-line { display: flex; align-items: baseline; gap: 8px; margin-top: .75rem; padding: .6rem .85rem; background: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 6px; font-size: 13.5px; color: #15803D; }
+    .output-line strong { font-weight: 600; }
+
+    .callout { display: flex; align-items: flex-start; gap: 10px; border-radius: 8px; padding: .85rem 1.1rem; margin: .75rem 0 1rem; font-size: 14.5px; line-height: 1.65; color: var(--text-sub); }
+    .callout-note { background: var(--note-bg); border: 1px solid #FCD9A8; border-left: 4px solid var(--note-bd); }
+    .callout-emoji { flex-shrink: 0; font-size: 16px; line-height: 1.5; }
+    .callout strong { color: var(--text-main); font-weight: 600; }
+
+    .related-list { list-style: none; padding: 0; margin: .5rem 0; }
+    .related-list li { font-size: 14.5px; color: var(--accent); margin-bottom: .35rem; }
+    .related-list li::before { content: '→  '; color: var(--text-meta); }
+
+    .doc-footer { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-meta); }
+    footer { text-align: center; padding: 2rem; font-size: 12.5px; color: var(--text-meta); }
+    footer a { color: var(--accent); text-decoration: none; }
+    @media(max-width:640px){ .doc-card{padding:2rem 1.25rem;} .doc-title{font-size:22px;} .page-shell{padding:1.5rem 1rem 4rem;} }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">Anugraha S</a>
+  <a class="nav-back" href="../index.html">← Back to portfolio</a>
+</nav>
+<div class="page-shell">
+  <div class="page-label">Portfolio Sample</div>
+  <h1 class="page-title">Workflow Documentation</h1>
+  <p class="page-desc">End-to-end workflow documentation for a multi-region content publishing pipeline — roles, stages, QA checkpoints, SLAs, and escalation paths.</p>
+  <div class="tag-row">
+    <span class="tag">Workflow Documentation</span>
+    <span class="tag">Content Publishing</span>
+    <span class="tag">Multi-region</span>
+    <span class="tag">DITA</span>
+    <span class="tag">Process Doc</span>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-type-label">Workflow Documentation</div>
+    <h1 class="doc-title">Content Publishing Workflow — Multi-Region Documentation</h1>
+    <p class="doc-meta">Version 1.0 <span>·</span> Author: Anugraha S <span>·</span> Last updated: April 2026</p>
+    <hr class="header-rule"/>
+
+    <!-- OVERVIEW -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M3 9h18M9 21V9"/></svg></span>
+      <h2>Overview</h2>
+    </div>
+    <hr class="section-rule"/>
+    <p class="body-p">This document describes the end-to-end workflow for publishing structured content across multiple regional markets. It covers the roles involved, the stages of the publishing pipeline, quality checkpoints, and escalation paths for common issues.</p>
+    <p class="body-p">This workflow applies to structured documentation published to a centralised repository and distributed to regional marketplace endpoints.</p>
+
+    <!-- SCOPE -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></span>
+      <h2>Scope</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>In scope</th><th>Out of scope</th></tr></thead>
+      <tbody>
+        <tr><td>Content creation and authoring</td><td>Graphic design and visual asset production</td></tr>
+        <tr><td>Translation and localisation review</td><td>Legal review and regulatory approval</td></tr>
+        <tr><td>QA and content validation</td><td>IT infrastructure and system configuration</td></tr>
+        <tr><td>Publishing and deployment</td><td>Post-publication analytics</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ROLES -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></span>
+      <h2>Roles and responsibilities</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>Role</th><th>Responsibility</th></tr></thead>
+      <tbody>
+        <tr><td>Content Author</td><td>Creates and updates structured documentation. Responsible for accuracy, tone, and format compliance.</td></tr>
+        <tr><td>Content Reviewer</td><td>Reviews authored content against style guide and client SOPs before it moves to QA.</td></tr>
+        <tr><td>QA Specialist</td><td>Validates content against technical requirements, checks for broken links, formatting errors, and completeness.</td></tr>
+        <tr><td>Localisation Coordinator</td><td>Manages translation handoff for non-English markets. Coordinates with vendors and reviews translated output.</td></tr>
+        <tr><td>Publishing Specialist</td><td>Executes the final publish to the content repository. Verifies successful deployment across all target regions.</td></tr>
+        <tr><td>Content Manager</td><td>Oversees the workflow, resolves escalations, and approves high-risk changes before publishing.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- WORKFLOW STAGES -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 5l7 7-7 7M5 5l7 7-7 7"/></svg></span>
+      <h2>Workflow stages</h2>
+    </div>
+    <hr class="section-rule"/>
+
+    <!-- STAGE 1 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">1</span>
+        <span class="stage-title">Content request and intake</span>
+        <span class="stage-owner">Owner: Content Manager</span>
+      </div>
+      <div class="stage-body">
+        <p class="stage-trigger">Trigger: A content request is raised via the project management system — new content, update, or correction.</p>
+        <div class="stage-sub">Steps</div>
+        <ol class="step-list">
+          <li>Content Manager reviews the incoming request and classifies it as: new content, minor update, major update, or urgent correction.</li>
+          <li>Request is assigned to a Content Author with a due date based on priority level.</li>
+          <li>Author confirms receipt and acknowledges the scope.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; Assigned content task with clear brief, deadline, and reference materials attached.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">2</span>
+        <span class="stage-title">Authoring</span>
+        <span class="stage-owner">Owner: Content Author</span>
+      </div>
+      <div class="stage-body">
+        <ol class="step-list">
+          <li>Review the brief, reference materials, and any existing content on the topic.</li>
+          <li>Create or update the content in the authoring tool — oXygen XML Editor for DITA content, or the relevant CMS for other formats.</li>
+          <li>Write content according to the applicable style guide and topic type requirements.</li>
+          <li>Complete the self-review checklist before submitting:
+            <ul class="doc-list" style="margin-top:.4rem;margin-left:.5rem">
+              <li>Is the content accurate and complete?</li>
+              <li>Does it follow the correct topic type structure (concept / task / reference)?</li>
+              <li>Are all steps numbered and in logical sequence?</li>
+              <li>Is tone consistent with the client's voice guidelines?</li>
+              <li>Are there any broken internal links or missing references?</li>
+            </ul>
+          </li>
+          <li>Submit content for review and update the task status.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; Draft content ready for review.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 3 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">3</span>
+        <span class="stage-title">Content review</span>
+        <span class="stage-owner">Owner: Content Reviewer</span>
+      </div>
+      <div class="stage-body">
+        <ol class="step-list">
+          <li>Pick up the submitted content within the agreed SLA — 1 business day for standard content, 4 hours for urgent corrections.</li>
+          <li>Check content against client tone of voice, structural requirements, factual accuracy, and consistency with related published content.</li>
+          <li><strong>Approve</strong> the content and move it to QA, or <strong>return</strong> it to the Author with specific comments for revision.</li>
+          <li>If returned, Author revises and resubmits. The review loop repeats until approval.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; Approved content ready for QA.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 4 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">4</span>
+        <span class="stage-title">Quality assurance</span>
+        <span class="stage-owner">Owner: QA Specialist</span>
+      </div>
+      <div class="stage-body">
+        <ol class="step-list">
+          <li>Validate the content against the defined QA checklist:
+            <ul class="doc-list" style="margin-top:.4rem;margin-left:.5rem">
+              <li>Formatting is correct and renders as expected in the target output format</li>
+              <li>All internal and external links are functional</li>
+              <li>Images or media references are correctly attached</li>
+              <li>Metadata (title, tags, product associations) is complete and accurate</li>
+              <li>Content is free of placeholder text or incomplete sections</li>
+            </ul>
+          </li>
+          <li>For multi-region content, verify that regional variants are correctly tagged and routed to the appropriate marketplace endpoints.</li>
+          <li><strong>Pass</strong> the content and route it to Publishing, or <strong>flag</strong> issues and return to the Author or Reviewer for correction.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; QA-cleared content ready for localisation (if applicable) or publishing.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 5 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">5</span>
+        <span class="stage-title">Localisation</span>
+        <span class="stage-owner">Owner: Localisation Coordinator</span>
+      </div>
+      <div class="stage-body">
+        <p class="stage-trigger">Applies to: Content destined for EU-5, CA (French), or other non-English regional markets.</p>
+        <ol class="step-list">
+          <li>Export the approved English source content and prepare a handoff package for the translation vendor.</li>
+          <li>Translation is completed by the vendor within the agreed turnaround time.</li>
+          <li>Review translated content against the source for completeness, terminology consistency, and correct formatting.</li>
+          <li>Return approved translations to QA for a final check before publishing.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; Translated and reviewed content for all target markets.</div>
+      </div>
+    </div>
+
+    <!-- STAGE 6 -->
+    <div class="stage-card">
+      <div class="stage-header">
+        <span class="stage-num">6</span>
+        <span class="stage-title">Publishing</span>
+        <span class="stage-owner">Owner: Publishing Specialist</span>
+      </div>
+      <div class="stage-body">
+        <ol class="step-list">
+          <li>Receive QA-cleared content for all applicable regions.</li>
+          <li>Upload content to the publishing system — AJUDA repository or equivalent CMS.</li>
+          <li>Set the correct regional routing, effective date, and visibility settings.</li>
+          <li>Perform a test publish in the staging environment before pushing to production (major updates only).</li>
+          <li>Publish content to production.</li>
+          <li>Verify that the live content renders correctly across all target regions.</li>
+          <li>Update task status to <strong>Published</strong> and notify the content requester.</li>
+        </ol>
+        <div class="output-line"><strong>Output:</strong>&nbsp; Content live across all target markets.</div>
+      </div>
+    </div>
+
+    <!-- ESCALATION -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></span>
+      <h2>Error and escalation handling</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>Issue</th><th>First response</th><th>Escalation path</th></tr></thead>
+      <tbody>
+        <tr><td>Factual error identified post-publish</td><td>Author creates correction task immediately. Urgent priority.</td><td>Content Manager notified if correction affects more than one region.</td></tr>
+        <tr><td>Translation vendor misses deadline</td><td>Localisation Coordinator contacts vendor and reports to Content Manager.</td><td>Content Manager decides whether to delay publish or release English-only content first.</td></tr>
+        <tr><td>Publishing system failure</td><td>Publishing Specialist logs the issue with IT support.</td><td>Content Manager and IT escalate based on severity.</td></tr>
+        <tr><td>Content approved with incorrect formatting</td><td>QA flags for correction. Author and Reviewer both notified.</td><td>If systemic, Content Manager initiates a style guide review.</td></tr>
+      </tbody>
+    </table>
+
+    <!-- SLA -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+      <h2>SLA reference</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>Content type</th><th>Authoring</th><th>Review</th><th>QA</th><th>Localisation</th><th>Total (EN only)</th></tr></thead>
+      <tbody>
+        <tr><td>New article (standard)</td><td>2 days</td><td>1 day</td><td>1 day</td><td>3 days</td><td>4 days</td></tr>
+        <tr><td>Minor update</td><td>4 hours</td><td>4 hours</td><td>2 hours</td><td>1 day</td><td>1 day</td></tr>
+        <tr><td>Urgent correction</td><td>1 hour</td><td>1 hour</td><td>30 mins</td><td>4 hours</td><td>2.5 hours</td></tr>
+      </tbody>
+    </table>
+
+    <!-- RELATED -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></span>
+      <h2>Related documents</h2>
+    </div>
+    <hr class="section-rule"/>
+    <ul class="related-list">
+      <li>Content Style Guide</li>
+      <li>DITA Authoring Standards and SOPs</li>
+      <li>Translation Vendor Briefing Template</li>
+      <li>QA Checklist (full version)</li>
+    </ul>
+
+    <div class="doc-footer">© 2026 Sample Document — Anugraha S Technical Writing Portfolio. This document is a portfolio sample crafted to Microsoft Manual of Style standards.</div>
+  </div>
+</div>
+<footer>Anugraha S · Technical Writer · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>
