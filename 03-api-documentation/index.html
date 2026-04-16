@@ -1,1 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Documentation — Anugraha S</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:         #F5F7FA;
+      --surface:    #FFFFFF;
+      --border:     #E2E6ED;
+      --text-main:  #1A2233;
+      --text-sub:   #3D4B66;
+      --text-meta:  #6B7A99;
+      --accent:     #2563A8;
+      --accent-lt:  #EBF2FB;
+      --code-bg:    #F1F4F8;
+      --code-dark:  #1E2A3A;
+      --get-bg:     #2563A8;
+      --post-bg:    #1A2233;
+      --tip-bg:     #FFFDF0;
+      --tip-bd:     #F59E0B;
+      --note-bg:    #FFF8F0;
+      --note-bd:    #F97316;
+      --tag-bg:     #EEF4FF;
+      --tag-txt:    #3B5BDB;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-main); font-size: 15px; line-height: 1.72; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 100; }
+    .nav-brand { font-size: 14px; font-weight: 600; color: var(--text-main); text-decoration: none; }
+    .nav-back  { font-size: 13px; color: var(--text-meta); text-decoration: none; }
+    .nav-back:hover { color: var(--accent); }
+    .page-shell { max-width: 900px; margin: 0 auto; padding: 3rem 2rem 5rem; }
 
+    /* PAGE INTRO */
+    .page-label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .4rem; }
+    .page-title { font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--text-main); margin-bottom: .4rem; }
+    .page-desc  { font-size: 14px; color: var(--text-meta); margin-bottom: .75rem; max-width: 580px; }
+    .tag-row    { display: flex; gap: 8px; margin-bottom: 1.75rem; flex-wrap: wrap; }
+    .tag        { font-size: 11.5px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--tag-bg); color: var(--tag-txt); }
+
+    /* DOC CARD */
+    .doc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3rem 3.5rem; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+    .doc-type-label { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: .5rem; }
+    .doc-title  { font-size: 30px; font-weight: 700; letter-spacing: -.02em; color: var(--text-main); line-height: 1.2; margin-bottom: .4rem; }
+    .doc-meta   { font-size: 13.5px; color: var(--text-meta); margin-bottom: 1.25rem; }
+    .doc-meta span { margin: 0 4px; }
+    .header-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.75rem; }
+
+    /* SECTION HEADS */
+    .section-head { display: flex; align-items: center; gap: 10px; margin-top: 2.25rem; margin-bottom: .5rem; }
+    .section-icon { color: var(--accent); display: flex; align-items: center; flex-shrink: 0; }
+    .section-icon svg { width: 20px; height: 20px; }
+    .section-head h2 { font-size: 19px; font-weight: 700; color: var(--text-main); letter-spacing: -.01em; }
+    .section-rule { border: none; border-top: 1px solid var(--border); margin-bottom: 1.1rem; }
+    .sub-head { font-size: 15px; font-weight: 700; color: var(--text-main); margin: 1.25rem 0 .4rem; }
+
+    /* BODY TEXT */
+    .body-p { font-size: 15px; color: var(--text-sub); line-height: 1.72; margin-bottom: .85rem; }
+
+    /* LISTS */
+    ol.step-list { list-style: none; padding: 0; margin: .6rem 0 1rem; counter-reset: steps; }
+    ol.step-list li { counter-increment: steps; display: flex; gap: 10px; align-items: baseline; font-size: 15px; color: var(--text-sub); line-height: 1.68; margin-bottom: .5rem; }
+    ol.step-list li::before { content: counter(steps)"."; font-weight: 600; color: var(--text-sub); min-width: 18px; flex-shrink: 0; }
+    ol.step-list li strong { color: var(--text-main); font-weight: 600; }
+    ul.doc-list { list-style: none; padding: 0; margin: .6rem 0 1rem; }
+    ul.doc-list li { display: flex; gap: 10px; align-items: baseline; font-size: 15px; color: var(--text-sub); line-height: 1.68; margin-bottom: .4rem; }
+    ul.doc-list li::before { content: '•'; color: var(--text-sub); flex-shrink: 0; }
+    ul.doc-list li strong { color: var(--text-main); font-weight: 600; }
+
+    /* INLINE CODE */
+    code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--code-bg); color: var(--accent); padding: 1px 5px; border-radius: 4px; }
+
+    /* CODE BLOCK */
+    .code-block { background: var(--code-dark); border-radius: 8px; padding: 1rem 1.25rem; margin: .75rem 0 1rem; overflow-x: auto; }
+    .code-block pre { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #CBD5E1; line-height: 1.65; white-space: pre; }
+
+    /* TABLES */
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: .75rem 0 1.25rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .doc-table thead tr { background: var(--code-bg); }
+    .doc-table th { text-align: left; padding: 10px 14px; font-size: 13px; font-weight: 600; color: var(--text-main); border-bottom: 1px solid var(--border); }
+    .doc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-sub); vertical-align: top; line-height: 1.55; }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--text-main); white-space: nowrap; }
+
+    /* ENDPOINT CARDS */
+    .endpoint-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1.5rem; }
+    .endpoint-header { display: flex; align-items: center; gap: 12px; padding: .85rem 1.25rem; background: var(--code-bg); border-bottom: 1px solid var(--border); }
+    .method-badge { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 5px; color: #fff; letter-spacing: .04em; }
+    .badge-get  { background: var(--get-bg); }
+    .badge-post { background: var(--post-bg); }
+    .endpoint-path { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--text-main); font-weight: 500; }
+    .endpoint-body { padding: 1.25rem 1.5rem; }
+    .endpoint-desc { font-size: 14.5px; color: var(--text-sub); margin-bottom: 1rem; line-height: 1.65; }
+    .ep-sub { font-size: 13.5px; font-weight: 700; color: var(--text-main); margin: 1rem 0 .4rem; }
+
+    /* CALLOUTS */
+    .callout { display: flex; align-items: flex-start; gap: 10px; border-radius: 8px; padding: .85rem 1.1rem; margin: .75rem 0 1rem; font-size: 14.5px; line-height: 1.65; color: var(--text-sub); }
+    .callout-tip  { background: var(--tip-bg);  border: 1px solid #FDE68A; border-left: 4px solid var(--tip-bd); }
+    .callout-note { background: var(--note-bg); border: 1px solid #FCD9A8; border-left: 4px solid var(--note-bd); }
+    .callout-emoji { flex-shrink: 0; font-size: 16px; line-height: 1.5; }
+    .callout strong { color: var(--text-main); font-weight: 600; }
+
+    /* UNITS TABLE — no monospace first col */
+    .units-table td:first-child { font-family: 'Inter', sans-serif; font-size: 14px; }
+
+    .doc-footer { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); font-size: 12.5px; color: var(--text-meta); }
+    footer { text-align: center; padding: 2rem; font-size: 12.5px; color: var(--text-meta); }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media(max-width:640px){ .doc-card{padding:2rem 1.25rem;} .doc-title{font-size:22px;} .page-shell{padding:1.5rem 1rem 4rem;} }
+  </style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="../index.html">Anugraha S</a>
+  <a class="nav-back" href="../index.html">← Back to portfolio</a>
+</nav>
+<div class="page-shell">
+  <div class="page-label">Portfolio Sample</div>
+  <h1 class="page-title">API Documentation</h1>
+  <p class="page-desc">A complete API getting-started guide and endpoint reference for the OpenWeatherMap REST API, written for developers integrating weather data into applications.</p>
+  <div class="tag-row">
+    <span class="tag">API Documentation</span>
+    <span class="tag">REST</span>
+    <span class="tag">OpenWeatherMap</span>
+    <span class="tag">JSON</span>
+  </div>
+
+  <div class="doc-card">
+    <div class="doc-type-label">API Guide</div>
+    <h1 class="doc-title">OpenWeatherMap API — Getting Started Guide</h1>
+    <p class="doc-meta">Version 2.5 <span>·</span> Last updated: April 2026 <span>·</span> Audience: Developers</p>
+    <hr class="header-rule"/>
+
+    <!-- INTRODUCTION -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+      <h2>Introduction</h2>
+    </div>
+    <hr class="section-rule"/>
+    <p class="body-p">The OpenWeatherMap API provides real-time weather data, forecasts, and historical weather information for any location in the world. The API supports RESTful calls over HTTPS and returns responses in JSON format.</p>
+    <p class="body-p">This guide walks you through setting up your account, authenticating your requests, and making your first API call.</p>
+
+    <!-- PREREQUISITES -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span>
+      <h2>Prerequisites</h2>
+    </div>
+    <hr class="section-rule"/>
+    <p class="body-p">Before you begin, make sure you have the following:</p>
+    <ul class="doc-list">
+      <li>A free OpenWeatherMap account (sign up at <a href="https://openweathermap.org" target="_blank" style="color:var(--accent)">openweathermap.org</a>)</li>
+      <li>Basic familiarity with REST APIs and HTTP requests</li>
+      <li>A tool for making API calls — curl, Postman, or your preferred programming language</li>
+    </ul>
+
+    <!-- AUTHENTICATION -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+      <h2>Authentication</h2>
+    </div>
+    <hr class="section-rule"/>
+    <p class="body-p">All requests to the OpenWeatherMap API require an API key passed as the <code>appid</code> query parameter. Follow these steps to get your key:</p>
+    <ol class="step-list">
+      <li>Log in to your OpenWeatherMap account.</li>
+      <li>Navigate to <strong>API Keys</strong> in your account dashboard.</li>
+      <li>Copy the default API key, or click <strong>Generate</strong> to create a new one.</li>
+    </ol>
+    <div class="callout callout-note">
+      <span class="callout-emoji">📌</span>
+      <span><strong>Note:</strong> New API keys can take up to 2 hours to activate. If you receive a <code>401 Unauthorized</code> error immediately after generating a key, wait and try again.</span>
+    </div>
+
+    <!-- BASE URL -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></span>
+      <h2>Base URL</h2>
+    </div>
+    <hr class="section-rule"/>
+    <p class="body-p">All API requests use the following base URL:</p>
+    <div class="code-block"><pre>https://api.openweathermap.org/data/2.5/</pre></div>
+    <p class="body-p">Append the endpoint path and query parameters to construct your full request URL:</p>
+    <div class="code-block"><pre>GET https://api.openweathermap.org/data/2.5/{endpoint}?{parameters}&amp;appid={YOUR_API_KEY}</pre></div>
+
+    <!-- ENDPOINTS -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path stroke-linecap="round" d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/><path stroke-linecap="round" d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/></svg></span>
+      <h2>Endpoints</h2>
+    </div>
+    <hr class="section-rule"/>
+
+    <!-- ENDPOINT 1: Current Weather -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="method-badge badge-get">GET</span>
+        <span class="endpoint-path">/data/2.5/weather</span>
+      </div>
+      <div class="endpoint-body">
+        <p class="endpoint-desc">Retrieves current weather conditions for a specified location.</p>
+        <div class="ep-sub">Parameters</div>
+        <table class="doc-table">
+          <thead><tr><th>Parameter</th><th>Required</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>q</td><td>Yes*</td><td>string</td><td>City name. Format: <code>city</code> or <code>city,country_code</code>. Example: <code>Paris,FR</code></td></tr>
+            <tr><td>lat</td><td>Yes*</td><td>number</td><td>Latitude coordinate. Use with <code>lon</code>.</td></tr>
+            <tr><td>lon</td><td>Yes*</td><td>number</td><td>Longitude coordinate. Use with <code>lat</code>.</td></tr>
+            <tr><td>id</td><td>Yes*</td><td>integer</td><td>OpenWeatherMap city ID.</td></tr>
+            <tr><td>zip</td><td>Yes*</td><td>string</td><td>ZIP code. Format: <code>zip,country_code</code>. Example: <code>10001,US</code></td></tr>
+            <tr><td>appid</td><td>Yes</td><td>string</td><td>Your API key.</td></tr>
+            <tr><td>units</td><td>No</td><td>string</td><td>Unit system. Options: <code>standard</code> (default), <code>metric</code>, <code>imperial</code></td></tr>
+            <tr><td>lang</td><td>No</td><td>string</td><td>Language for the weather description. Default: <code>en</code>.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout callout-note" style="margin-top:.25rem">
+          <span class="callout-emoji">📌</span>
+          <span><strong>Note:</strong> At least one location parameter (<code>q</code>, <code>lat</code>+<code>lon</code>, <code>id</code>, or <code>zip</code>) is required.</span>
+        </div>
+        <div class="ep-sub">Sample request</div>
+        <div class="code-block"><pre>GET https://api.openweathermap.org/data/2.5/weather?q=London&amp;appid=YOUR_API_KEY&amp;units=metric</pre></div>
+        <div class="ep-sub">Sample response</div>
+        <div class="code-block"><pre>{
+  "name": "London",
+  "sys": { "country": "GB" },
+  "weather": [{ "id": 803, "main": "Clouds", "description": "broken clouds" }],
+  "main": {
+    "temp": 14.2,
+    "feels_like": 13.1,
+    "temp_min": 12.8,
+    "temp_max": 15.6,
+    "humidity": 72,
+    "pressure": 1012
+  },
+  "wind": { "speed": 5.1, "deg": 230 },
+  "visibility": 10000,
+  "cod": 200
+}</pre></div>
+      </div>
+    </div>
+
+    <!-- ENDPOINT 2: Forecast -->
+    <div class="endpoint-card">
+      <div class="endpoint-header">
+        <span class="method-badge badge-get">GET</span>
+        <span class="endpoint-path">/data/2.5/forecast</span>
+      </div>
+      <div class="endpoint-body">
+        <p class="endpoint-desc">Returns weather forecast data in 3-hour intervals for the next 5 days.</p>
+        <div class="ep-sub">Parameters</div>
+        <p class="body-p" style="font-size:14px">Accepts the same location parameters as the Current Weather endpoint, plus:</p>
+        <table class="doc-table">
+          <thead><tr><th>Parameter</th><th>Required</th><th>Type</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>cnt</td><td>No</td><td>integer</td><td>Number of timestamps to return. Default returns all available (up to 40).</td></tr>
+            <tr><td>appid</td><td>Yes</td><td>string</td><td>Your API key.</td></tr>
+            <tr><td>units</td><td>No</td><td>string</td><td>Unit system. Options: <code>standard</code>, <code>metric</code>, <code>imperial</code></td></tr>
+          </tbody>
+        </table>
+        <div class="ep-sub">Sample request</div>
+        <div class="code-block"><pre>GET https://api.openweathermap.org/data/2.5/forecast?q=Tokyo&amp;cnt=8&amp;appid=YOUR_API_KEY&amp;units=metric</pre></div>
+      </div>
+    </div>
+
+    <!-- RESPONSE FIELDS -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M3 14h18M10 3v18"/></svg></span>
+      <h2>Key response fields</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>string</td><td>City name</td></tr>
+        <tr><td>sys.country</td><td>string</td><td>Country code (ISO 3166)</td></tr>
+        <tr><td>weather[0].main</td><td>string</td><td>Short weather condition — for example, Rain, Clouds, Clear</td></tr>
+        <tr><td>weather[0].description</td><td>string</td><td>Detailed weather description</td></tr>
+        <tr><td>main.temp</td><td>number</td><td>Current temperature in the requested unit</td></tr>
+        <tr><td>main.feels_like</td><td>number</td><td>Perceived temperature</td></tr>
+        <tr><td>main.humidity</td><td>number</td><td>Humidity percentage</td></tr>
+        <tr><td>wind.speed</td><td>number</td><td>Wind speed in metres/sec (or mph if <code>units=imperial</code>)</td></tr>
+        <tr><td>visibility</td><td>number</td><td>Visibility in metres (max 10,000)</td></tr>
+        <tr><td>dt</td><td>integer</td><td>Time of data calculation, Unix UTC timestamp</td></tr>
+        <tr><td>cod</td><td>integer</td><td>HTTP status code of the response</td></tr>
+      </tbody>
+    </table>
+
+    <!-- UNITS -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></span>
+      <h2>Units of measurement</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table units-table">
+      <thead><tr><th>Unit system</th><th>Parameter value</th><th>Temperature</th><th>Wind speed</th></tr></thead>
+      <tbody>
+        <tr><td>Standard (default)</td><td><code>standard</code></td><td>Kelvin (K)</td><td>metres/sec</td></tr>
+        <tr><td>Metric</td><td><code>metric</code></td><td>Celsius (°C)</td><td>metres/sec</td></tr>
+        <tr><td>Imperial</td><td><code>imperial</code></td><td>Fahrenheit (°F)</td><td>miles/hour</td></tr>
+      </tbody>
+    </table>
+
+    <!-- ERROR CODES -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
+      <h2>Error codes</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table">
+      <thead><tr><th>Code</th><th>Status</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>400</td><td>Bad Request</td><td>Missing or invalid parameters. Check your request format.</td></tr>
+        <tr><td>401</td><td>Unauthorized</td><td>Invalid or inactive API key. Verify your <code>appid</code> value.</td></tr>
+        <tr><td>404</td><td>Not Found</td><td>Location not found. Try a different city name format or use coordinates instead.</td></tr>
+        <tr><td>429</td><td>Too Many Requests</td><td>You have exceeded the rate limit for your subscription plan.</td></tr>
+        <tr><td>500</td><td>Internal Server Error</td><td>Server-side issue. Wait and retry.</td></tr>
+      </tbody>
+    </table>
+    <div class="ep-sub">Sample error response</div>
+    <div class="code-block"><pre>{ "cod": "404", "message": "city not found" }</pre></div>
+
+    <!-- RATE LIMITS -->
+    <div class="section-head">
+      <span class="section-icon"><svg fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+      <h2>Rate limits</h2>
+    </div>
+    <hr class="section-rule"/>
+    <table class="doc-table units-table">
+      <thead><tr><th>Plan</th><th>Calls per minute</th><th>Calls per day</th></tr></thead>
+      <tbody>
+        <tr><td>Free</td><td>60</td><td>1,000</td></tr>
+        <tr><td>Startup</td><td>600</td><td>10,000</td></tr>
+        <tr><td>Developer</td><td>3,000</td><td>100,000</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-tip">
+      <span class="callout-emoji">💡</span>
+      <span><strong>Tip:</strong> If you exceed your rate limit, the API returns a <code>429</code> status code. Cache responses on your end to reduce unnecessary repeated calls.</span>
+    </div>
+
+    <div class="doc-footer">© 2026 Sample Document — Anugraha S Technical Writing Portfolio. This document is a portfolio sample crafted to Microsoft Manual of Style standards.</div>
+  </div>
+</div>
+<footer>Anugraha S · Technical Writer · <a href="../index.html">Back to portfolio</a></footer>
+</body>
+</html>
